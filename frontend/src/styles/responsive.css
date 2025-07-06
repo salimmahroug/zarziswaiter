@@ -1,0 +1,235 @@
+/* Responsive styles */
+
+/* Better font sizing for mobile devices */
+@media (max-width: 640px) {
+  h1 {
+    font-size: 1.5rem !important;
+  }
+  
+  h2 {
+    font-size: 1.25rem !important;
+  }
+  
+  h3 {
+    font-size: 1.125rem !important;
+  }
+  
+  table {
+    font-size: 0.875rem !important;
+  }
+  
+  .table-container {
+    overflow-x: auto !important;
+  }
+}
+
+/* Better spacing on small devices */
+@media (max-width: 768px) {
+  .card-container {
+    padding: 0.75rem !important;
+  }
+  
+  .space-y-responsive > * + * {
+    margin-top: 0.75rem !important;
+  }
+  
+  .space-x-responsive > * + * {
+    margin-left: 0.75rem !important;
+  }
+}
+
+/* Full width form inputs on small screens */
+@media (max-width: 640px) {
+  .responsive-form-container .form-row {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .responsive-form-container .form-col {
+    width: 100% !important;
+    margin-bottom: 1rem;
+  }
+}
+
+/* Responsive grids */
+.responsive-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+/* Responsive tables */
+.responsive-table-container {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Images responsives */
+img.responsive {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Hide elements on mobile */
+@media (max-width: 640px) {
+  .hide-on-mobile {
+    display: none !important;
+  }
+}
+
+/* Show elements only on mobile */
+@media (min-width: 641px) {
+  .show-on-mobile-only {
+    display: none !important;
+  }
+}
+
+/* Font size adjustments */
+.text-responsive {
+  font-size: clamp(0.875rem, 2vw, 1rem);
+}
+
+/* Mobile sidebar styles */
+@media (max-width: 768px) {
+  /* Ensure the sidebar appears above other content on mobile */
+  [data-sidebar="sidebar"] {
+    z-index: 50 !important;
+  }
+  
+  /* Sidebar backdrop overlay */
+  .sidebar-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 40;
+    display: block;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+  
+  .sidebar-open .sidebar-backdrop {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  /* Ajustement de l'animation du menu latéral */
+  [data-mobile="true"] {
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2) !important;
+    animation-duration: 0.3s !important;
+  }
+    /* Rendre les items du menu plus grand pour les cibles tactiles */
+  [data-sidebar="menu-button"] {
+    min-height: 44px;
+    padding: 10px !important;
+  }
+
+  /* Ajustements pour les pages avec navigation mobile */
+  .mobile-nav-active {
+    padding-bottom: 60px !important;
+  }
+}
+
+/* Animation lors de l'ouverture/fermeture du menu */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInLeft {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease-out forwards;
+  animation-fill-mode: both;
+}
+
+@media (max-width: 768px) {
+  [data-sidebar="sidebar"] {
+    animation: slideInLeft 0.3s ease;
+  }
+  
+  .sidebar-backdrop {
+    animation: fadeIn 0.3s ease;
+  }
+}
+
+.heading-responsive {
+  font-size: clamp(1.25rem, 3vw, 2rem);
+}
+
+/* Styles pour les cartes de serveurs sur mobile */
+@media (max-width: 768px) {
+  /* Animation pour les cartes de serveurs */
+  .server-card-appear {
+    animation: fadeInUp 0.3s ease-out;
+    animation-fill-mode: both;
+    opacity: 0;
+  }
+  
+  /* Style pour les cartes de serveurs */
+  .server-card {
+    border-radius: 0.5rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    margin-bottom: 0.75rem;
+  }
+  
+  .server-card:active {
+    transform: scale(0.98);
+    background-color: rgba(0, 0, 0, 0.02);
+  }
+  
+  /* Style pour les badges sur mobile */
+  .server-card .badge {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+  }
+  
+  /* Améliore la mise en page des cartes de serveurs */
+  .server-card-content {
+    padding: 0.75rem;
+  }
+  
+  .server-card-footer {
+    border-top: 1px solid #eee;
+    padding-top: 0.5rem;
+    margin-top: 0.25rem;
+  }
+  
+  /* Style spécial pour les boutons d'action sur les cartes */
+  .server-card-footer button {
+    padding: 0.35rem 0.45rem;
+    border-radius: 0.25rem;
+  }
+  
+  .server-card-footer button:active {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+}
