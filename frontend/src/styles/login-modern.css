@@ -1,0 +1,257 @@
+/* Login Modern Styles */
+
+/* Container principal */
+.login-container {
+  position: relative;
+  background: linear-gradient(135deg, #4a99cd 0%, #6bb3dc 50%, #4a99cd 100%);
+  overflow: hidden;
+}
+
+/* Fond animé avec particules */
+.animated-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.floating-shapes {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.shape {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  animation: float 6s ease-in-out infinite;
+}
+
+.shape-1 {
+  width: 80px;
+  height: 80px;
+  top: 10%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.shape-2 {
+  width: 120px;
+  height: 120px;
+  top: 20%;
+  right: 15%;
+  animation-delay: 1s;
+}
+
+.shape-3 {
+  width: 60px;
+  height: 60px;
+  bottom: 30%;
+  left: 20%;
+  animation-delay: 2s;
+}
+
+.shape-4 {
+  width: 100px;
+  height: 100px;
+  bottom: 20%;
+  right: 20%;
+  animation-delay: 3s;
+}
+
+.shape-5 {
+  width: 40px;
+  height: 40px;
+  top: 60%;
+  left: 50%;
+  animation-delay: 4s;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(-20px) rotate(180deg);
+    opacity: 0.6;
+  }
+}
+
+/* Carte de login */
+.login-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+  border-radius: 20px;
+  opacity: 0;
+  transform: translateY(30px) scale(0.95);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.login-card.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Icône animée */
+.login-icon {
+  animation: pulse-glow 2s ease-in-out infinite;
+  box-shadow: 0 0 30px rgba(74, 153, 205, 0.4);
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 30px rgba(74, 153, 205, 0.4);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(74, 153, 205, 0.6);
+    transform: scale(1.05);
+  }
+}
+
+/* Boutons de type utilisateur */
+.user-type-btn {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.user-type-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.user-type-btn:hover::before {
+  left: 100%;
+}
+
+.user-type-btn.active {
+  background: linear-gradient(135deg, #4a99cd, #6bb3dc);
+  color: white;
+  box-shadow: 0 8px 25px rgba(74, 153, 205, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Champs de formulaire */
+.form-group {
+  position: relative;
+}
+
+.form-input {
+  transition: all 0.3s ease;
+  border: 2px solid #e2e8f0;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.form-input:focus {
+  border-color: #4a99cd;
+  box-shadow: 0 0 0 3px rgba(74, 153, 205, 0.1);
+  background: white;
+  transform: translateY(-1px);
+}
+
+/* Bouton de soumission */
+.submit-btn {
+  background: linear-gradient(135deg, #4a99cd, #6bb3dc);
+  border: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.submit-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.submit-btn:hover::before {
+  left: 100%;
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 35px rgba(74, 153, 205, 0.4);
+}
+
+.submit-btn:active {
+  transform: translateY(0);
+}
+
+/* Alertes d'erreur */
+.error-alert {
+  animation: shake 0.5s ease-in-out;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* Toggle mot de passe */
+.password-toggle {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6b7280;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.password-toggle:hover {
+  color: #4a99cd;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .login-card {
+    margin: 1rem;
+    border-radius: 16px;
+  }
+  
+  .shape {
+    display: none;
+  }
+}
+
+/* Effets de chargement */
+.loading-spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Animation du select */
+.server-select {
+  transition: all 0.3s ease;
+}
+
+.server-select:focus-within {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(74, 153, 205, 0.15);
+}

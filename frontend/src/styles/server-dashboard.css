@@ -57,7 +57,7 @@
 }
 
 .mobile-scroll::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: #4a99cd;
   border-radius: 2px;
 }
 
@@ -86,4 +86,34 @@
   .dark-mode-gradient {
     background: linear-gradient(to bottom right, #1e293b, #334155);
   }
+}
+
+/* Styles personnalisés pour la couleur principale #4a99cd */
+.zarzis-accent {
+  color: #4a99cd;
+}
+
+.zarzis-bg {
+  background-color: #4a99cd;
+}
+
+.zarzis-border {
+  border-color: #4a99cd;
+}
+
+.zarzis-gradient {
+  background: linear-gradient(135deg, #4a99cd, #5ba3d0);
+}
+
+.zarzis-text-shadow {
+  text-shadow: 0 2px 4px rgba(74, 153, 205, 0.2);
+}
+
+/* Effets de hover avec la couleur principale */
+.zarzis-hover:hover {
+  background-color: #4a99cd;
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(74, 153, 205, 0.3);
+  transition: all 0.2s ease-in-out;
 }

@@ -39,14 +39,17 @@ export function MainHeader() {
   };
 
   return (
-    <header className="sticky top-0 z-10 w-full bg-background border-b px-3 sm:px-4 md:px-6 py-3">
+    <header className="sticky top-0 z-10 w-full bg-white/95 backdrop-blur-sm border-b border-zarzis-primary/10 px-3 sm:px-4 md:px-6 py-3 shadow-sm">
       <div className="flex h-full items-center justify-between">
         <div className="flex items-center gap-3">
           <Button
             variant="ghost"
             size="icon"
             onClick={toggleSidebar}
-            className="md:hidden"
+            className={`hover:bg-zarzis-primary/10 hover:text-zarzis-primary transition-colors ${
+              !sidebar.open ? 'bg-zarzis-primary/5 text-zarzis-primary' : ''
+            }`}
+            title={sidebar.open ? "Fermer le menu" : "Ouvrir le menu"}
           >
             <Menu className="h-5 w-5" />
           </Button>

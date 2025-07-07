@@ -37,6 +37,7 @@ import {
   Clock,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import Logo from "@/components/ui/Logo";
 import "@/styles/server-dashboard.css";
 
 const ServerDashboard = () => {
@@ -95,11 +96,11 @@ const ServerDashboard = () => {
 
   if (serverLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+      <div className="min-h-screen bg-gradient-to-br from-zarzis-primary/10 to-zarzis-primary/20 p-4">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center justify-center h-64">
             <div className="text-center">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-zarzis-primary mx-auto mb-4"></div>
               <p className="text-muted-foreground">
                 Chargement de vos informations...
               </p>
@@ -112,7 +113,7 @@ const ServerDashboard = () => {
 
   if (serverError || !server) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+      <div className="min-h-screen bg-gradient-to-br from-zarzis-primary/10 to-zarzis-primary/20 p-4">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center justify-center h-64">
             <div className="text-center">
@@ -186,18 +187,24 @@ const ServerDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div className="min-h-screen bg-gradient-to-br from-zarzis-primary/10 to-zarzis-primary/20">
       {/* Container principal avec padding responsive */}
       <div className="container mx-auto px-3 sm:px-4 lg:px-6 py-4 sm:py-6 lg:py-8 max-w-7xl space-y-4 sm:space-y-6">
         
         {/* Header avec nom du serveur et bouton de déconnexion - Responsive */}
-        <Card className="bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-xl">
+        <Card className="bg-gradient-to-r from-zarzis-primary to-zarzis-primary-dark text-white shadow-xl">
           <CardContent className="p-4 sm:p-6">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               
               {/* Informations utilisateur */}
               <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
                 <div className="flex items-center gap-3 sm:gap-4">
+                  <Logo 
+                    size="md" 
+                    variant="white" 
+                    showText={false}
+                    className="hidden sm:flex"
+                  />
                   <div className="p-2 sm:p-3 bg-white/20 rounded-full">
                     <User className="h-6 w-6 sm:h-8 sm:w-8" />
                   </div>
@@ -205,8 +212,8 @@ const ServerDashboard = () => {
                     <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold">
                       Bonjour, {server.name}
                     </h1>
-                    <p className="text-blue-100 text-sm sm:text-base">
-                      Votre espace personnel
+                    <p className="text-zarzis-primary-light/90 text-sm sm:text-base">
+                      Votre espace personnel • Waiter of Zarzis
                     </p>
                   </div>
                 </div>
@@ -227,17 +234,17 @@ const ServerDashboard = () => {
 
         {/* Cartes de statistiques principales - Grid responsive amélioré */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4 lg:gap-6">
-          <Card className="bg-gradient-to-br from-green-50 to-green-100 border-green-200 shadow-md hover:shadow-lg transition-all duration-200 card-hover-animation">
+          <Card className="bg-gradient-to-br from-zarzis-primary/20 to-zarzis-primary/30 border-zarzis-primary/30 shadow-md hover:shadow-lg transition-all duration-200 card-hover-animation">
             <CardContent className="p-3 sm:p-4 card-mobile">
               <div className="flex items-center gap-2 sm:gap-3">
-                <div className="p-1.5 sm:p-2 bg-green-500 rounded-lg shadow-md">
+                <div className="p-1.5 sm:p-2 bg-zarzis-primary rounded-lg shadow-md">
                   <DollarSign className="h-4 w-4 sm:h-5 sm:w-5 text-white stat-icon" />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="text-xs sm:text-sm text-green-700 font-medium truncate stat-title">
+                  <p className="text-xs sm:text-sm text-zarzis-primary-dark font-medium truncate stat-title">
                     Gains restants
                   </p>
-                  <p className="text-lg sm:text-xl font-bold text-green-800 truncate stat-value">
+                  <p className="text-lg sm:text-xl font-bold text-zarzis-primary-dark truncate stat-value">
                     {formatCurrency(remainingAmount)}
                   </p>
                 </div>
@@ -245,17 +252,17 @@ const ServerDashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200 shadow-md hover:shadow-lg transition-all duration-200 card-hover-animation">
+          <Card className="bg-gradient-to-br from-zarzis-primary/15 to-zarzis-primary/25 border-zarzis-primary/30 shadow-md hover:shadow-lg transition-all duration-200 card-hover-animation">
             <CardContent className="p-3 sm:p-4 card-mobile">
               <div className="flex items-center gap-2 sm:gap-3">
-                <div className="p-1.5 sm:p-2 bg-blue-500 rounded-lg shadow-md">
+                <div className="p-1.5 sm:p-2 bg-zarzis-primary-light rounded-lg shadow-md">
                   <Wallet className="h-4 w-4 sm:h-5 sm:w-5 text-white stat-icon" />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="text-xs sm:text-sm text-blue-700 font-medium truncate stat-title">
+                  <p className="text-xs sm:text-sm text-zarzis-primary-dark font-medium truncate stat-title">
                     Paiements reçus
                   </p>
-                  <p className="text-lg sm:text-xl font-bold text-blue-800 truncate stat-value">
+                  <p className="text-lg sm:text-xl font-bold text-zarzis-primary-dark truncate stat-value">
                     {formatCurrency(totalPaid)}
                   </p>
                 </div>
@@ -263,17 +270,17 @@ const ServerDashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200 shadow-md hover:shadow-lg transition-all duration-200 card-hover-animation">
+          <Card className="bg-gradient-to-br from-zarzis-primary/10 to-zarzis-primary/20 border-zarzis-primary/30 shadow-md hover:shadow-lg transition-all duration-200 card-hover-animation">
             <CardContent className="p-3 sm:p-4 card-mobile">
               <div className="flex items-center gap-2 sm:gap-3">
-                <div className="p-1.5 sm:p-2 bg-purple-500 rounded-lg shadow-md">
+                <div className="p-1.5 sm:p-2 bg-zarzis-primary-dark rounded-lg shadow-md">
                   <Calendar className="h-4 w-4 sm:h-5 sm:w-5 text-white stat-icon" />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="text-xs sm:text-sm text-purple-700 font-medium truncate stat-title">
+                  <p className="text-xs sm:text-sm text-zarzis-primary-dark font-medium truncate stat-title">
                     Événements
                   </p>
-                  <p className="text-lg sm:text-xl font-bold text-purple-800 truncate">
+                  <p className="text-lg sm:text-xl font-bold text-zarzis-primary-dark truncate">
                     {server.totalEvents}
                   </p>
                 </div>
@@ -301,17 +308,17 @@ const ServerDashboard = () => {
           </Card>
 
           {/* Nouvelle carte : Argent en attente */}
-          <Card className="bg-gradient-to-br from-yellow-50 to-yellow-100 border-yellow-200 shadow-md hover:shadow-lg transition-all duration-200 card-hover-animation">
+          <Card className="bg-gradient-to-br from-zarzis-primary/5 to-zarzis-primary/15 border-zarzis-primary/30 shadow-md hover:shadow-lg transition-all duration-200 card-hover-animation">
             <CardContent className="p-3 sm:p-4 card-mobile">
               <div className="flex items-center gap-2 sm:gap-3">
                 <div className="p-1.5 sm:p-2 bg-yellow-500 rounded-lg shadow-md">
                   <Clock className="h-4 w-4 sm:h-5 sm:w-5 text-white stat-icon" />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="text-xs sm:text-sm text-yellow-700 font-medium truncate stat-title">
+                  <p className="text-xs sm:text-sm text-zarzis-primary-dark font-medium truncate stat-title">
                     En attente
                   </p>
-                  <p className="text-lg sm:text-xl font-bold text-yellow-800 truncate stat-value">
+                  <p className="text-lg sm:text-xl font-bold text-zarzis-primary-dark truncate stat-value">
                     {formatCurrency(pendingAmount)}
                   </p>
                 </div>
@@ -326,8 +333,8 @@ const ServerDashboard = () => {
           <Card className="hover:shadow-lg transition-shadow duration-200 lg:col-span-1">
             <CardHeader className="pb-3">
               <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
-                <div className="p-1.5 sm:p-2 bg-blue-100 rounded-lg">
-                  <User className="h-4 w-4 sm:h-5 sm:w-5 text-blue-600" />
+                <div className="p-1.5 sm:p-2 bg-zarzis-primary/20 rounded-lg">
+                  <User className="h-4 w-4 sm:h-5 sm:w-5 text-zarzis-primary" />
                 </div>
                 Mes informations
               </CardTitle>
@@ -336,7 +343,7 @@ const ServerDashboard = () => {
               <div className="space-y-2 sm:space-y-3">
                 {/* Info téléphone - Responsive */}
                 <div className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 bg-gray-50 rounded-lg">
-                  <Phone className="h-3 w-3 sm:h-4 sm:w-4 text-blue-500 flex-shrink-0" />
+                  <Phone className="h-3 w-3 sm:h-4 sm:w-4 text-zarzis-primary flex-shrink-0" />
                   <div className="min-w-0 flex-1">
                     <p className="text-xs text-muted-foreground uppercase tracking-wide">
                       Téléphone
@@ -349,7 +356,7 @@ const ServerDashboard = () => {
 
                 {/* Prix par événement - Responsive */}
                 <div className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 bg-gray-50 rounded-lg">
-                  <DollarSign className="h-3 w-3 sm:h-4 sm:w-4 text-green-500 flex-shrink-0" />
+                  <DollarSign className="h-3 w-3 sm:h-4 sm:w-4 text-zarzis-primary flex-shrink-0" />
                   <div className="min-w-0 flex-1">
                     <p className="text-xs text-muted-foreground uppercase tracking-wide">
                       Prix par événement
@@ -362,7 +369,7 @@ const ServerDashboard = () => {
 
                 {/* Statut - Responsive */}
                 <div className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 bg-gray-50 rounded-lg">
-                  <Calendar className="h-3 w-3 sm:h-4 sm:w-4 text-purple-500 flex-shrink-0" />
+                  <Calendar className="h-3 w-3 sm:h-4 sm:w-4 text-zarzis-primary flex-shrink-0" />
                   <div className="min-w-0 flex-1">
                     <p className="text-xs text-muted-foreground uppercase tracking-wide">
                       Statut
@@ -384,8 +391,8 @@ const ServerDashboard = () => {
             <CardHeader className="pb-3">
               <CardTitle className="flex flex-col sm:flex-row sm:items-center gap-2 text-base sm:text-lg">
                 <div className="flex items-center gap-2">
-                  <div className="p-1.5 sm:p-2 bg-green-100 rounded-lg">
-                    <CreditCard className="h-4 w-4 sm:h-5 sm:w-5 text-green-600" />
+                  <div className="p-1.5 sm:p-2 bg-zarzis-primary/20 rounded-lg">
+                    <CreditCard className="h-4 w-4 sm:h-5 sm:w-5 text-zarzis-primary" />
                   </div>
                   <span>Historique des paiements</span>
                 </div>
@@ -460,7 +467,7 @@ const ServerDashboard = () => {
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-xs sm:text-sm text-gray-600">Total reçu:</span>
-                  <span className="font-medium text-green-600 text-sm sm:text-base">
+                  <span className="font-medium text-zarzis-primary text-sm sm:text-base">
                     {formatCurrency(totalPaid)}
                   </span>
                 </div>
@@ -468,7 +475,7 @@ const ServerDashboard = () => {
                   <span>Montant restant:</span>
                   <span
                     className={
-                      remainingAmount > 0 ? "text-blue-600" : "text-gray-500"
+                      remainingAmount > 0 ? "text-zarzis-primary" : "text-gray-500"
                     }
                   >
                     {formatCurrency(remainingAmount)}
@@ -480,17 +487,16 @@ const ServerDashboard = () => {
         </div>
 
         {/* Historique des événements - Responsive */}
-        <Card className="hover:shadow-lg transition-shadow duration-200">
-          <CardHeader className="pb-3">
-            <CardTitle className="flex flex-col sm:flex-row sm:items-center gap-2 text-base sm:text-lg">
-              <div className="flex items-center gap-2">
-                <div className="p-1.5 sm:p-2 bg-purple-100 rounded-lg">
-                  <History className="h-4 w-4 sm:h-5 sm:w-5 text-purple-600" />
+        <Card className="hover:shadow-lg transition-shadow duration-200">            <CardHeader className="pb-3">
+              <CardTitle className="flex flex-col sm:flex-row sm:items-center gap-2 text-base sm:text-lg">
+                <div className="flex items-center gap-2">
+                  <div className="p-1.5 sm:p-2 bg-zarzis-primary/20 rounded-lg">
+                    <History className="h-4 w-4 sm:h-5 sm:w-5 text-zarzis-primary" />
+                  </div>
+                  <span>Mes événements</span>
                 </div>
-                <span>Mes événements</span>
-              </div>
-              <Badge variant="outline" className="self-start sm:ml-auto text-xs sm:text-sm">
-                {eventsLoading
+                <Badge variant="outline" className="self-start sm:ml-auto text-xs sm:text-sm">
+                  {eventsLoading
                   ? "Chargement..."
                   : `${serverEvents.length} événements`}
               </Badge>

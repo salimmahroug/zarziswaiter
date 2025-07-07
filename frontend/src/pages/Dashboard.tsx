@@ -41,6 +41,7 @@ import { serverService } from "@/services/serverService";
 import { EventDetails } from "@/types";
 import { useScreenSize } from "@/hooks/use-mobile";
 import { toast } from "sonner";
+import Logo from "@/components/ui/Logo";
 import "@/styles/dashboard.css";
 
 const Dashboard = () => {
@@ -115,21 +116,29 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 p-4 sm:p-6">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-zarzis-light to-blue-50 p-4 sm:p-6">
       <div className="max-w-7xl mx-auto space-y-6 sm:space-y-8">
         
         {/* Header Section avec gradient */}
-        <div className="relative overflow-hidden bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-700 rounded-2xl shadow-2xl">
+        <div className="relative overflow-hidden bg-gradient-to-r from-zarzis-primary via-zarzis-primary-light to-zarzis-primary-dark rounded-2xl shadow-2xl">
           <div className="absolute inset-0 bg-black/10"></div>
           <div className="relative px-6 py-8 sm:px-8 sm:py-12">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-              <div>
-                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-2">
-                  Tableau de bord
-                </h1>
-                <p className="text-blue-100 text-sm sm:text-base">
-                  Vue d'ensemble de votre activité • Waiter of Zarzis
-                </p>
+              <div className="flex items-center gap-4">
+                <Logo 
+                  size="lg" 
+                  variant="white" 
+                  showText={false}
+                  className="hidden sm:flex"
+                />
+                <div>
+                  <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-2">
+                    Tableau de bord
+                  </h1>
+                  <p className="text-blue-100 text-sm sm:text-base">
+                    Vue d'ensemble de votre activité • Waiter of Zarzis
+                  </p>
+                </div>
               </div>
               <AlertDialog>
                 <AlertDialogTrigger asChild>
@@ -198,7 +207,7 @@ const Dashboard = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           
           {/* Carte Événements */}
-          <Card className="group hover:scale-105 transition-all duration-300 bg-gradient-to-br from-blue-500 to-blue-700 border-0 shadow-xl hover:shadow-2xl stats-card shine-effect glow-effect">
+          <Card className="group hover:scale-105 transition-all duration-300 bg-gradient-to-br from-zarzis-primary to-zarzis-primary-dark border-0 shadow-xl hover:shadow-2xl stats-card shine-effect glow-effect">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -242,7 +251,7 @@ const Dashboard = () => {
           </Card>
 
           {/* Carte Revenus */}
-          <Card className="group hover:scale-105 transition-all duration-300 bg-gradient-to-br from-amber-500 to-orange-600 border-0 shadow-xl hover:shadow-2xl stats-card shine-effect glow-effect">
+          <Card className="group hover:scale-105 transition-all duration-300 bg-gradient-to-br from-zarzis-secondary to-yellow-600 border-0 shadow-xl hover:shadow-2xl stats-card shine-effect glow-effect">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -264,7 +273,7 @@ const Dashboard = () => {
           </Card>
 
           {/* Carte Commission */}
-          <Card className="group hover:scale-105 transition-all duration-300 bg-gradient-to-br from-purple-500 to-purple-700 border-0 shadow-xl hover:shadow-2xl stats-card shine-effect glow-effect">
+          <Card className="group hover:scale-105 transition-all duration-300 bg-gradient-to-br from-zarzis-primary-light to-zarzis-primary border-0 shadow-xl hover:shadow-2xl stats-card shine-effect glow-effect">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -293,11 +302,11 @@ const Dashboard = () => {
           <Card className="lg:col-span-2 bg-white/80 backdrop-blur-sm border-0 shadow-xl hover:shadow-2xl transition-all duration-300">
             <CardHeader className="px-6 pt-6 pb-4">
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg">
+                <div className="p-2 bg-gradient-to-r from-zarzis-primary to-zarzis-primary-light rounded-lg">
                   <TrendingUp className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <CardTitle className="text-xl lg:text-2xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                  <CardTitle className="text-xl lg:text-2xl bg-gradient-to-r from-zarzis-primary to-zarzis-primary-dark bg-clip-text text-transparent">
                     Revenus par mois
                   </CardTitle>
                   <CardDescription className="text-gray-600">
@@ -369,7 +378,7 @@ const Dashboard = () => {
           <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-xl hover:shadow-2xl transition-all duration-300">
             <CardHeader className="px-6 pt-6 pb-4">
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-lg">
+                <div className="p-2 bg-gradient-to-r from-zarzis-secondary to-zarzis-accent rounded-lg">
                   <CalendarClock className="w-5 h-5 text-white" />
                 </div>
                 <div>

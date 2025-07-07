@@ -1,5 +1,6 @@
 
 import type { Config } from "tailwindcss";
+import tailwindcssAnimate from "tailwindcss-animate";
 
 export default {
 	darkMode: ["class"],
@@ -64,10 +65,17 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				zarzis: {
-					blue: '#1E3A8A',
-					gold: '#D4AF37',
+					primary: '#4a99cd',
+					'primary-light': '#6bb3dc',
+					'primary-dark': '#3a7ba7',
+					'primary-darker': '#2a5a7a',
+					secondary: '#D4AF37',
+					accent: '#f39c12',
 					gray: '#64748B',
-					light: '#F8FAFC'
+					'gray-light': '#94a3b8',
+					'gray-dark': '#475569',
+					light: '#F8FAFC',
+					dark: '#1a202c'
 				}
 			},
 			borderRadius: {
@@ -99,5 +107,5 @@ export default {
 			}
 		}
 	},
-	plugins: [require("tailwindcss-animate")],
+	plugins: [tailwindcssAnimate],
 } satisfies Config;

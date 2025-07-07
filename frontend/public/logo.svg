@@ -1,0 +1,33 @@
+<svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <!-- Waiter figure -->
+  <g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Head -->
+    <circle cx="60" cy="25" r="12"/>
+    
+    <!-- Body -->
+    <path d="M60 37v35"/>
+    
+    <!-- Bow tie -->
+    <path d="M55 42l5-2 5 2-5 3-5-3z"/>
+    
+    <!-- Arms -->
+    <path d="M48 50l12-8"/>
+    <path d="M72 50l-12-8"/>
+    
+    <!-- Legs -->
+    <path d="M60 72l-8 20"/>
+    <path d="M60 72l8 20"/>
+    
+    <!-- Tray with glass -->
+    <ellipse cx="42" cy="48" rx="8" ry="3"/>
+    <rect x="38" y="45" width="8" height="12" rx="1"/>
+    
+    <!-- Food/plate -->
+    <ellipse cx="46" cy="48" rx="4" ry="2"/>
+  </g>
+  
+  <!-- Text -->
+  <text x="60" y="110" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="currentColor">
+    ZARZIS WAITER
+  </text>
+</svg>
