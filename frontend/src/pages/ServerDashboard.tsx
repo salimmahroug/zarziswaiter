@@ -1,5 +1,5 @@
-import React from 'react';
-import { useAuth } from '@/hooks/useAuth';
+import React from "react";
+import { useAuth } from "@/hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -16,8 +16,8 @@ import {
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import {
-  DollarSign, 
-  LogOut, 
+  DollarSign,
+  LogOut,
   MapPin,
   User,
   Phone,
@@ -34,8 +34,10 @@ import {
   PartyPopper,
   ChefHat,
   Users,
+  Clock,
 } from "lucide-react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import "@/styles/server-dashboard.css";
 
 const ServerDashboard = () => {
   const { user, logout } = useAuth();
@@ -65,19 +67,24 @@ const ServerDashboard = () => {
 
   const handleLogout = () => {
     logout();
-    navigate('/login');
+    navigate("/login");
   };
 
-  if (!user || user.role !== 'server') {
+  if (!user || user.role !== "server") {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <Card className="w-full max-w-md">
           <CardHeader>
-            <CardTitle className="text-center text-red-600">Accès non autorisé</CardTitle>
+            <CardTitle className="text-center text-red-600">
+              Accès non autorisé
+            </CardTitle>
           </CardHeader>
           <CardContent className="text-center">
-            <p className="mb-4">Vous devez être connecté en tant que serveur pour accéder à cette page.</p>
-            <Button onClick={() => navigate('/login')}>
+            <p className="mb-4">
+              Vous devez être connecté en tant que serveur pour accéder à cette
+              page.
+            </p>
+            <Button onClick={() => navigate("/login")}>
               Retour à la connexion
             </Button>
           </CardContent>
@@ -113,9 +120,7 @@ const ServerDashboard = () => {
               <p className="text-destructive mb-4">
                 Erreur lors du chargement de vos informations
               </p>
-              <Button onClick={handleLogout}>
-                Retour à la connexion
-              </Button>
+              <Button onClick={handleLogout}>Retour à la connexion</Button>
             </div>
           </div>
         </div>
@@ -126,7 +131,19 @@ const ServerDashboard = () => {
   // Calculer les statistiques de paiement
   const totalPaid = server.totalPayments || calculateTotalPaid(server);
   const remainingAmount = server.totalEarnings || 0;
-  const originalTotalEarnings = server.totalEarningsOriginal || calculateOriginalEarnings(server);
+  const originalTotalEarnings =
+    server.totalEarningsOriginal || calculateOriginalEarnings(server);
+  
+  // Calculer l'argent en attente (événements non payés)
+  const pendingAmount = serverEvents.reduce((total, event) => {
+    const serverAssignment = event.assignedServers?.find(
+      (assignment) => assignment.serverId === server.id
+    );
+    if (serverAssignment && !serverAssignment.isPaid) {
+      return total + (serverAssignment.payment || 0);
+    }
+    return total;
+  }, 0);
 
   // Fonctions utilitaires pour l'affichage des événements
   const getEventTypeIcon = (type: string) => {
@@ -169,46 +186,58 @@ const ServerDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
-      <div className="max-w-6xl mx-auto space-y-6">
-        {/* Header avec nom du serveur et bouton de déconnexion */}
-        <Card className="bg-gradient-to-r from-blue-600 to-purple-600 text-white">
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <div className="p-3 bg-white/20 rounded-full">
-                  <User className="h-8 w-8" />
-                </div>
-                <div>
-                  <h1 className="text-3xl font-bold">
-                    Bonjour, {server.name}
-                  </h1>
-                  <p className="text-blue-100">Votre espace personnel</p>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+      {/* Container principal avec padding responsive */}
+      <div className="container mx-auto px-3 sm:px-4 lg:px-6 py-4 sm:py-6 lg:py-8 max-w-7xl space-y-4 sm:space-y-6">
+        
+        {/* Header avec nom du serveur et bouton de déconnexion - Responsive */}
+        <Card className="bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-xl">
+          <CardContent className="p-4 sm:p-6">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              
+              {/* Informations utilisateur */}
+              <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+                <div className="flex items-center gap-3 sm:gap-4">
+                  <div className="p-2 sm:p-3 bg-white/20 rounded-full">
+                    <User className="h-6 w-6 sm:h-8 sm:w-8" />
+                  </div>
+                  <div>
+                    <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold">
+                      Bonjour, {server.name}
+                    </h1>
+                    <p className="text-blue-100 text-sm sm:text-base">
+                      Votre espace personnel
+                    </p>
+                  </div>
                 </div>
               </div>
-              <Button 
-                onClick={handleLogout} 
-                variant="outline" 
-                className="bg-white/10 border-white/20 text-white hover:bg-white/20"
+
+              {/* Bouton déconnexion - Full width sur mobile */}
+              <Button
+                onClick={handleLogout}
+                variant="outline"
+                className="w-full sm:w-auto bg-white/10 border-white/20 text-white hover:bg-white/20 text-sm sm:text-base"
               >
-                <LogOut className="h-4 w-4 mr-2" />
+                <LogOut className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
                 Se déconnecter
               </Button>
             </div>
           </CardContent>
         </Card>
 
-        {/* Cartes de statistiques principales */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <Card className="bg-gradient-to-br from-green-50 to-green-100 border-green-200">
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-green-500 rounded-lg">
-                  <DollarSign className="h-5 w-5 text-white" />
+        {/* Cartes de statistiques principales - Grid responsive amélioré */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4 lg:gap-6">
+          <Card className="bg-gradient-to-br from-green-50 to-green-100 border-green-200 shadow-md hover:shadow-lg transition-all duration-200 card-hover-animation">
+            <CardContent className="p-3 sm:p-4 card-mobile">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <div className="p-1.5 sm:p-2 bg-green-500 rounded-lg shadow-md">
+                  <DollarSign className="h-4 w-4 sm:h-5 sm:w-5 text-white stat-icon" />
                 </div>
-                <div>
-                  <p className="text-sm text-green-700 font-medium">Gains restants</p>
-                  <p className="text-xl font-bold text-green-800">
+                <div className="min-w-0 flex-1">
+                  <p className="text-xs sm:text-sm text-green-700 font-medium truncate stat-title">
+                    Gains restants
+                  </p>
+                  <p className="text-lg sm:text-xl font-bold text-green-800 truncate stat-value">
                     {formatCurrency(remainingAmount)}
                   </p>
                 </div>
@@ -216,15 +245,17 @@ const ServerDashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-blue-500 rounded-lg">
-                  <Wallet className="h-5 w-5 text-white" />
+          <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200 shadow-md hover:shadow-lg transition-all duration-200 card-hover-animation">
+            <CardContent className="p-3 sm:p-4 card-mobile">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <div className="p-1.5 sm:p-2 bg-blue-500 rounded-lg shadow-md">
+                  <Wallet className="h-4 w-4 sm:h-5 sm:w-5 text-white stat-icon" />
                 </div>
-                <div>
-                  <p className="text-sm text-blue-700 font-medium">Paiements reçus</p>
-                  <p className="text-xl font-bold text-blue-800">
+                <div className="min-w-0 flex-1">
+                  <p className="text-xs sm:text-sm text-blue-700 font-medium truncate stat-title">
+                    Paiements reçus
+                  </p>
+                  <p className="text-lg sm:text-xl font-bold text-blue-800 truncate stat-value">
                     {formatCurrency(totalPaid)}
                   </p>
                 </div>
@@ -232,15 +263,17 @@ const ServerDashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200">
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-purple-500 rounded-lg">
-                  <Calendar className="h-5 w-5 text-white" />
+          <Card className="bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200 shadow-md hover:shadow-lg transition-all duration-200 card-hover-animation">
+            <CardContent className="p-3 sm:p-4 card-mobile">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <div className="p-1.5 sm:p-2 bg-purple-500 rounded-lg shadow-md">
+                  <Calendar className="h-4 w-4 sm:h-5 sm:w-5 text-white stat-icon" />
                 </div>
-                <div>
-                  <p className="text-sm text-purple-700 font-medium">Événements</p>
-                  <p className="text-xl font-bold text-purple-800">
+                <div className="min-w-0 flex-1">
+                  <p className="text-xs sm:text-sm text-purple-700 font-medium truncate stat-title">
+                    Événements
+                  </p>
+                  <p className="text-lg sm:text-xl font-bold text-purple-800 truncate">
                     {server.totalEvents}
                   </p>
                 </div>
@@ -248,67 +281,96 @@ const ServerDashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-orange-50 to-orange-100 border-orange-200">
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-orange-500 rounded-lg">
-                  <TrendingDown className="h-5 w-5 text-white" />
+          <Card className="bg-gradient-to-br from-orange-50 to-orange-100 border-orange-200 shadow-md hover:shadow-lg transition-all duration-200 card-hover-animation">
+            <CardContent className="p-3 sm:p-4 card-mobile">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <div className="p-1.5 sm:p-2 bg-orange-500 rounded-lg shadow-md">
+                  <TrendingDown className="h-4 w-4 sm:h-5 sm:w-5 text-white stat-icon" />
                 </div>
-                <div>
-                  <p className="text-sm text-orange-700 font-medium">Statut</p>
-                  <Badge variant={server.available ? "default" : "secondary"} className="mt-1">
+                <div className="min-w-0 flex-1">
+                  <p className="text-xs sm:text-sm text-orange-700 font-medium truncate stat-title">Statut</p>
+                  <Badge
+                    variant={server.available ? "default" : "secondary"}
+                    className="mt-1 text-xs sm:text-sm"
+                  >
                     {server.available ? "Disponible" : "Indisponible"}
                   </Badge>
                 </div>
               </div>
             </CardContent>
           </Card>
+
+          {/* Nouvelle carte : Argent en attente */}
+          <Card className="bg-gradient-to-br from-yellow-50 to-yellow-100 border-yellow-200 shadow-md hover:shadow-lg transition-all duration-200 card-hover-animation">
+            <CardContent className="p-3 sm:p-4 card-mobile">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <div className="p-1.5 sm:p-2 bg-yellow-500 rounded-lg shadow-md">
+                  <Clock className="h-4 w-4 sm:h-5 sm:w-5 text-white stat-icon" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="text-xs sm:text-sm text-yellow-700 font-medium truncate stat-title">
+                    En attente
+                  </p>
+                  <p className="text-lg sm:text-xl font-bold text-yellow-800 truncate stat-value">
+                    {formatCurrency(pendingAmount)}
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Section principale - Grid responsive amélioré */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
           {/* Informations personnelles */}
-          <Card className="hover:shadow-lg transition-shadow duration-200">
+          <Card className="hover:shadow-lg transition-shadow duration-200 lg:col-span-1">
             <CardHeader className="pb-3">
-              <CardTitle className="flex items-center gap-2 text-lg">
-                <div className="p-2 bg-blue-100 rounded-lg">
-                  <User className="h-5 w-5 text-blue-600" />
+              <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+                <div className="p-1.5 sm:p-2 bg-blue-100 rounded-lg">
+                  <User className="h-4 w-4 sm:h-5 sm:w-5 text-blue-600" />
                 </div>
                 Mes informations
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-3">
-                <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                  <Phone className="h-4 w-4 text-blue-500" />
-                  <div>
+            <CardContent className="space-y-3 sm:space-y-4">
+              <div className="space-y-2 sm:space-y-3">
+                {/* Info téléphone - Responsive */}
+                <div className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 bg-gray-50 rounded-lg">
+                  <Phone className="h-3 w-3 sm:h-4 sm:w-4 text-blue-500 flex-shrink-0" />
+                  <div className="min-w-0 flex-1">
                     <p className="text-xs text-muted-foreground uppercase tracking-wide">
                       Téléphone
                     </p>
-                    <p className="font-medium">
+                    <p className="font-medium text-sm sm:text-base truncate">
                       {server.phone || "Non renseigné"}
                     </p>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                  <DollarSign className="h-4 w-4 text-green-500" />
-                  <div>
+                {/* Prix par événement - Responsive */}
+                <div className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 bg-gray-50 rounded-lg">
+                  <DollarSign className="h-3 w-3 sm:h-4 sm:w-4 text-green-500 flex-shrink-0" />
+                  <div className="min-w-0 flex-1">
                     <p className="text-xs text-muted-foreground uppercase tracking-wide">
                       Prix par événement
                     </p>
-                    <p className="font-medium">
+                    <p className="font-medium text-sm sm:text-base truncate">
                       {formatCurrency(server.pricePerEvent)}
                     </p>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                  <Calendar className="h-4 w-4 text-purple-500" />
-                  <div>
+                {/* Statut - Responsive */}
+                <div className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 bg-gray-50 rounded-lg">
+                  <Calendar className="h-3 w-3 sm:h-4 sm:w-4 text-purple-500 flex-shrink-0" />
+                  <div className="min-w-0 flex-1">
                     <p className="text-xs text-muted-foreground uppercase tracking-wide">
                       Statut
                     </p>
-                    <Badge variant={server.available ? "default" : "secondary"}>
+                    <Badge 
+                      variant={server.available ? "default" : "secondary"}
+                      className="text-xs sm:text-sm"
+                    >
                       {server.available ? "Disponible" : "Indisponible"}
                     </Badge>
                   </div>
@@ -317,74 +379,98 @@ const ServerDashboard = () => {
             </CardContent>
           </Card>
 
-          {/* Historique des paiements */}
+          {/* Historique des paiements - Responsive */}
           <Card className="lg:col-span-2 hover:shadow-lg transition-shadow duration-200">
             <CardHeader className="pb-3">
-              <CardTitle className="flex items-center gap-2 text-lg">
-                <div className="p-2 bg-green-100 rounded-lg">
-                  <CreditCard className="h-5 w-5 text-green-600" />
+              <CardTitle className="flex flex-col sm:flex-row sm:items-center gap-2 text-base sm:text-lg">
+                <div className="flex items-center gap-2">
+                  <div className="p-1.5 sm:p-2 bg-green-100 rounded-lg">
+                    <CreditCard className="h-4 w-4 sm:h-5 sm:w-5 text-green-600" />
+                  </div>
+                  <span>Historique des paiements</span>
                 </div>
-                Historique des paiements
-                <Badge variant="outline" className="ml-auto">
+                <Badge variant="outline" className="self-start sm:ml-auto text-xs sm:text-sm">
                   {server.payments?.length || 0} paiements
                 </Badge>
               </CardTitle>
             </CardHeader>
             <CardContent>
               {!server.payments || server.payments.length === 0 ? (
-                <div className="text-center py-8">
-                  <CreditCard className="h-12 w-12 text-gray-300 mx-auto mb-4" />
-                  <p className="text-gray-500">Aucun paiement enregistré</p>
+                <div className="text-center py-6 sm:py-8">
+                  <CreditCard className="h-8 w-8 sm:h-12 sm:w-12 text-gray-300 mx-auto mb-3 sm:mb-4" />
+                  <p className="text-gray-500 text-sm sm:text-base">Aucun paiement enregistré</p>
                 </div>
               ) : (
-                <div className="space-y-3 max-h-80 overflow-y-auto">
+                <div className="space-y-2 sm:space-y-3 max-h-60 sm:max-h-80 overflow-y-auto mobile-scroll">
                   {server.payments
-                    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+                    .sort(
+                      (a, b) =>
+                        new Date(b.date).getTime() - new Date(a.date).getTime()
+                    )
                     .map((payment, index) => (
-                      <div key={index} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
-                        <div className="flex items-center gap-3">
-                          <div className="p-2 bg-green-100 rounded-full">
-                            <CheckCircle2 className="h-4 w-4 text-green-600" />
+                      <div
+                        key={index}
+                        className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 sm:p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors gap-2 sm:gap-0"
+                      >
+                        <div className="flex items-center gap-2 sm:gap-3">
+                          <div className="p-1.5 sm:p-2 bg-green-100 rounded-full">
+                            <CheckCircle2 className="h-3 w-3 sm:h-4 sm:w-4 text-green-600" />
                           </div>
-                          <div>
-                            <p className="font-medium text-green-700">
+                          <div className="min-w-0 flex-1">
+                            <p className="font-medium text-green-700 text-sm sm:text-base">
                               +{formatCurrency(payment.amount)}
                             </p>
-                            <p className="text-sm text-gray-600">
-                              {format(new Date(payment.date), "dd MMM yyyy", { locale: fr })}
+                            <p className="text-xs sm:text-sm text-gray-600">
+                              {format(new Date(payment.date), "dd MMM yyyy", {
+                                locale: fr,
+                              })}
                             </p>
                             {payment.notes && (
-                              <p className="text-xs text-gray-500 mt-1">{payment.notes}</p>
+                              <p className="text-xs text-gray-500 mt-1 truncate">
+                                {payment.notes}
+                              </p>
                             )}
                           </div>
                         </div>
-                        <div className="text-right">
-                          <p className="text-sm text-gray-600">
+                        <div className="text-left sm:text-right flex-shrink-0">
+                          <p className="text-xs sm:text-sm text-gray-600">
                             Restant: {formatCurrency(payment.remaining)}
                           </p>
                           {payment.paymentMethod && (
-                            <p className="text-xs text-gray-500">{payment.paymentMethod}</p>
+                            <p className="text-xs text-gray-500">
+                              {payment.paymentMethod}
+                            </p>
                           )}
                         </div>
                       </div>
                     ))}
                 </div>
               )}
-              
-              {/* Résumé financier */}
-              <Separator className="my-4" />
+
+              {/* Résumé financier - Responsive */}
+              <Separator className="my-3 sm:my-4" />
               <div className="space-y-2">
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-600">Total gagné (original):</span>
-                  <span className="font-medium">{formatCurrency(originalTotalEarnings)}</span>
+                  <span className="text-xs sm:text-sm text-gray-600">
+                    Total gagné (original):
+                  </span>
+                  <span className="font-medium text-sm sm:text-base">
+                    {formatCurrency(originalTotalEarnings)}
+                  </span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-600">Total reçu:</span>
-                  <span className="font-medium text-green-600">{formatCurrency(totalPaid)}</span>
+                  <span className="text-xs sm:text-sm text-gray-600">Total reçu:</span>
+                  <span className="font-medium text-green-600 text-sm sm:text-base">
+                    {formatCurrency(totalPaid)}
+                  </span>
                 </div>
-                <div className="flex justify-between items-center text-lg font-bold">
+                <div className="flex justify-between items-center text-base sm:text-lg font-bold">
                   <span>Montant restant:</span>
-                  <span className={remainingAmount > 0 ? "text-blue-600" : "text-gray-500"}>
+                  <span
+                    className={
+                      remainingAmount > 0 ? "text-blue-600" : "text-gray-500"
+                    }
+                  >
                     {formatCurrency(remainingAmount)}
                   </span>
                 </div>
@@ -393,94 +479,131 @@ const ServerDashboard = () => {
           </Card>
         </div>
 
-        {/* Historique des événements */}
+        {/* Historique des événements - Responsive */}
         <Card className="hover:shadow-lg transition-shadow duration-200">
           <CardHeader className="pb-3">
-            <CardTitle className="flex items-center gap-2 text-lg">
-              <div className="p-2 bg-purple-100 rounded-lg">
-                <History className="h-5 w-5 text-purple-600" />
+            <CardTitle className="flex flex-col sm:flex-row sm:items-center gap-2 text-base sm:text-lg">
+              <div className="flex items-center gap-2">
+                <div className="p-1.5 sm:p-2 bg-purple-100 rounded-lg">
+                  <History className="h-4 w-4 sm:h-5 sm:w-5 text-purple-600" />
+                </div>
+                <span>Mes événements</span>
               </div>
-              Mes événements
-              <Badge variant="outline" className="ml-auto">
-                {eventsLoading ? "Chargement..." : `${serverEvents.length} événements`}
+              <Badge variant="outline" className="self-start sm:ml-auto text-xs sm:text-sm">
+                {eventsLoading
+                  ? "Chargement..."
+                  : `${serverEvents.length} événements`}
               </Badge>
             </CardTitle>
           </CardHeader>
           <CardContent>
             {eventsLoading ? (
-              <div className="text-center py-8">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600 mx-auto mb-4"></div>
-                <p className="text-gray-500">Chargement de vos événements...</p>
+              <div className="text-center py-6 sm:py-8">
+                <div className="animate-spin rounded-full h-6 w-6 sm:h-8 sm:w-8 border-b-2 border-purple-600 mx-auto mb-3 sm:mb-4"></div>
+                <p className="text-gray-500 text-sm sm:text-base">Chargement de vos événements...</p>
               </div>
             ) : eventsError ? (
-              <div className="text-center py-8">
-                <XCircle className="h-12 w-12 text-red-300 mx-auto mb-4" />
-                <p className="text-red-500">Erreur lors du chargement des événements</p>
+              <div className="text-center py-6 sm:py-8">
+                <XCircle className="h-8 w-8 sm:h-12 sm:w-12 text-red-300 mx-auto mb-3 sm:mb-4" />
+                <p className="text-red-500 text-sm sm:text-base">
+                  Erreur lors du chargement des événements
+                </p>
               </div>
             ) : serverEvents.length === 0 ? (
-              <div className="text-center py-8">
-                <Calendar className="h-12 w-12 text-gray-300 mx-auto mb-4" />
-                <p className="text-gray-500">Aucun événement trouvé</p>
+              <div className="text-center py-6 sm:py-8">
+                <Calendar className="h-8 w-8 sm:h-12 sm:w-12 text-gray-300 mx-auto mb-3 sm:mb-4" />
+                <p className="text-gray-500 text-sm sm:text-base">Aucun événement trouvé</p>
               </div>
             ) : (
-              <div className="space-y-4 max-h-96 overflow-y-auto">
+              <div className="space-y-3 sm:space-y-4 max-h-80 sm:max-h-96 overflow-y-auto mobile-scroll">
                 {serverEvents
-                  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+                  .sort(
+                    (a, b) =>
+                      new Date(b.date).getTime() - new Date(a.date).getTime()
+                  )
                   .map((event) => {
                     const serverAssignment = event.assignedServers?.find(
-                      assignment => assignment.serverId === server.id
+                      (assignment) => assignment.serverId === server.id
                     );
-                    
+
                     return (
-                      <div key={event.id} className="p-4 border rounded-lg hover:shadow-md transition-shadow bg-white">
-                        <div className="flex items-start justify-between mb-3">
-                          <div className="flex items-center gap-3">
+                      <div
+                        key={event.id}
+                        className="p-3 sm:p-4 border rounded-lg hover:shadow-md transition-shadow bg-white card-hover-animation"
+                      >
+                        {/* En-tête événement - Responsive */}
+                        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-3">
+                          <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
                             {getEventTypeIcon(event.eventType)}
-                            <div>
-                              <h3 className="font-semibold text-lg">{event.clientName}</h3>
-                              <p className="text-sm text-gray-600">{getEventTypeLabel(event.eventType)}</p>
+                            <div className="min-w-0 flex-1">
+                              <h3 className="font-semibold text-base sm:text-lg truncate">
+                                {event.clientName}
+                              </h3>
+                              <p className="text-xs sm:text-sm text-gray-600">
+                                {getEventTypeLabel(event.eventType)}
+                              </p>
                             </div>
                           </div>
-                          <div className="text-right">
-                            <Badge variant={serverAssignment?.isPaid ? "default" : "secondary"}>
+                          <div className="flex sm:flex-col sm:items-end gap-2 sm:gap-1">
+                            <Badge
+                              variant={
+                                serverAssignment?.isPaid
+                                  ? "default"
+                                  : "secondary"
+                              }
+                              className="text-xs sm:text-sm"
+                            >
                               {serverAssignment?.isPaid ? "Payé" : "En attente"}
                             </Badge>
-                            <p className="text-sm text-gray-600 mt-1">
+                            <p className="text-xs sm:text-sm text-gray-600">
                               {formatCurrency(serverAssignment?.payment || 0)}
                             </p>
                           </div>
                         </div>
 
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                        {/* Détails événement - Grid responsive */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4 text-xs sm:text-sm">
                           <div className="flex items-center gap-2">
-                            <Calendar className="h-4 w-4 text-gray-400" />
-                            <span>{format(new Date(event.date), "dd MMM yyyy", { locale: fr })}</span>
+                            <Calendar className="h-3 w-3 sm:h-4 sm:w-4 text-gray-400 flex-shrink-0" />
+                            <span className="truncate">
+                              {format(new Date(event.date), "dd MMM yyyy", {
+                                locale: fr,
+                              })}
+                            </span>
                           </div>
                           <div className="flex items-center gap-2">
-                            <MapPin className="h-4 w-4 text-gray-400" />
-                            <span>{event.location}</span>
+                            <MapPin className="h-3 w-3 sm:h-4 sm:w-4 text-gray-400 flex-shrink-0" />
+                            <span className="truncate">{event.location}</span>
                           </div>
                           <div className="flex items-center gap-2">
-                            <ChefHat className="h-4 w-4 text-gray-400" />
-                            <span>{getCatererLabel(event.caterer)}</span>
+                            <ChefHat className="h-3 w-3 sm:h-4 sm:w-4 text-gray-400 flex-shrink-0" />
+                            <span className="truncate">{getCatererLabel(event.caterer)}</span>
                           </div>
                           <div className="flex items-center gap-2">
-                            <Users className="h-4 w-4 text-gray-400" />
-                            <span>{event.numberOfServers} serveurs</span>
+                            <Users className="h-3 w-3 sm:h-4 sm:w-4 text-gray-400 flex-shrink-0" />
+                            <span className="truncate">{event.numberOfServers} serveurs</span>
                           </div>
                         </div>
 
+                        {/* Notes - Responsive */}
                         {event.notes && (
-                          <div className="mt-3 p-2 bg-gray-50 rounded text-sm">
-                            <strong>Notes:</strong> {event.notes}
+                          <div className="mt-3 p-2 bg-gray-50 rounded text-xs sm:text-sm">
+                            <strong>Notes:</strong> <span className="break-words">{event.notes}</span>
                           </div>
                         )}
 
+                        {/* Date de paiement - Responsive */}
                         {serverAssignment?.paymentDate && (
                           <div className="mt-2 text-xs text-green-600">
                             <CheckCircle2 className="h-3 w-3 inline mr-1" />
-                            Payé le {format(new Date(serverAssignment.paymentDate), "dd MMM yyyy", { locale: fr })}
-                            {serverAssignment.paymentMethod && ` (${serverAssignment.paymentMethod})`}
+                            Payé le{" "}
+                            {format(
+                              new Date(serverAssignment.paymentDate),
+                              "dd MMM yyyy",
+                              { locale: fr }
+                            )}
+                            {serverAssignment.paymentMethod &&
+                              ` (${serverAssignment.paymentMethod})`}
                           </div>
                         )}
                       </div>

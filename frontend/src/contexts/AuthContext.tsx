@@ -53,11 +53,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const loginAsServer = (serverId: string, serverName: string) => {
-    const userData = { 
-      username: serverName, 
+    const userData = {
+      username: serverName,
       role: "server",
       serverId: serverId,
-      serverName: serverName 
+      serverName: serverName,
     };
 
     setIsAuthenticated(true);
@@ -75,7 +75,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, login, loginAsServer, logout }}>
+    <AuthContext.Provider
+      value={{ isAuthenticated, user, login, loginAsServer, logout }}
+    >
       {children}
     </AuthContext.Provider>
   );

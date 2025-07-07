@@ -15,11 +15,12 @@ La page de connexion serveur utilise maintenant **la vraie liste des serveurs** 
 ## 🔧 Améliorations Techniques
 
 ### API Integration
+
 ```typescript
 // Récupération dynamique des serveurs depuis l'API
 useEffect(() => {
   const fetchServers = async () => {
-    if (userType === 'server') {
+    if (userType === "server") {
       setLoadingServers(true);
       try {
         const serversList = await getAllServers(); // API réelle
@@ -38,11 +39,13 @@ useEffect(() => {
 ### États de l'Interface
 
 #### 1. Chargement
+
 ```
 🔄 Chargement des serveurs...
 ```
 
 #### 2. Succès - Liste des serveurs
+
 ```
 📋 Choisissez votre nom dans la liste
   ▼ [Dropdown avec les serveurs réels]
@@ -51,11 +54,13 @@ useEffect(() => {
 ```
 
 #### 3. Aucun serveur
+
 ```
 ⚠️ Aucun serveur trouvé. Contactez l'administrateur pour ajouter des serveurs.
 ```
 
 #### 4. Erreur de connexion
+
 ```
 ❌ Impossible de charger la liste des serveurs. Veuillez réessayer.
 ```
@@ -73,6 +78,7 @@ useEffect(() => {
 ### Pour les Administrateurs
 
 Si la liste est vide ou incomplète :
+
 1. Se connecter en tant qu'Admin
 2. Aller dans la section "Serveurs"
 3. Ajouter les serveurs manquants
@@ -81,10 +87,12 @@ Si la liste est vide ou incomplète :
 ## 📊 Format des Données
 
 Chaque serveur dans la liste affiche :
+
 - **Nom complet** : Tel qu'enregistré dans la base
 - **Statut** : "Disponible" ou "Indisponible"
 
 Exemple de serveur dans la base :
+
 ```json
 {
   "id": "686b249657e091ea9945a7a7",
@@ -99,22 +107,28 @@ Exemple de serveur dans la base :
 ## ⚠️ Résolution des Problèmes
 
 ### "Chargement des serveurs..." ne finit jamais
+
 **Causes :**
+
 - Backend non démarré
 - Problème de connexion réseau
 - Base de données inaccessible
 
 **Solutions :**
+
 1. Vérifier que le backend fonctionne : `http://localhost:5001`
 2. Tester l'API : `http://localhost:5001/api/servers`
 3. Contacter l'administrateur
 
 ### "Aucun serveur trouvé"
+
 **Cause :** Aucun serveur ajouté dans l'application
 **Solution :** Demander à l'admin d'ajouter des serveurs
 
 ### Mon nom n'apparaît pas dans la liste
+
 **Causes possibles :**
+
 1. Vous n'avez pas été ajouté comme serveur
 2. Votre nom a été mal orthographié lors de l'ajout
 3. Votre compte est désactivé
@@ -168,5 +182,5 @@ Exemple de serveur dans la base :
 
 ---
 
-*Mise à jour effectuée le 7 juillet 2025*
-*Version : Connexion dynamique avec API réelle*
+_Mise à jour effectuée le 7 juillet 2025_
+_Version : Connexion dynamique avec API réelle_

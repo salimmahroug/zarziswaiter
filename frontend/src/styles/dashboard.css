@@ -1,0 +1,143 @@
+/* Styles pour le Dashboard Admin */
+
+/* Animation de pulsation pour les cartes de stats */
+@keyframes pulse-soft {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+.stats-card {
+  animation: pulse-soft 4s ease-in-out infinite;
+}
+
+/* Animation de glissement pour les événements */
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.event-card {
+  animation: slide-in 0.6s ease-out;
+}
+
+.event-card:nth-child(1) { animation-delay: 0.1s; }
+.event-card:nth-child(2) { animation-delay: 0.2s; }
+.event-card:nth-child(3) { animation-delay: 0.3s; }
+
+/* Effet de brillance sur hover */
+.shine-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.shine-effect::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+.shine-effect:hover::before {
+  left: 100%;
+}
+
+/* Amélioration des tooltips du graphique */
+.recharts-tooltip-wrapper {
+  filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.1));
+}
+
+/* Animation des barres du graphique */
+.recharts-bar {
+  transition: all 0.3s ease;
+}
+
+.recharts-bar:hover {
+  filter: brightness(1.1);
+}
+
+/* Gradient text pour les titres */
+.gradient-text {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Bouton avec effet glassmorphism */
+.glass-button {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.glass-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/* Animation pour les icônes */
+.icon-bounce {
+  transition: transform 0.3s ease;
+}
+
+.icon-bounce:hover {
+  transform: scale(1.1) rotate(5deg);
+}
+
+/* Responsive animations */
+@media (prefers-reduced-motion: reduce) {
+  .stats-card,
+  .event-card,
+  .shine-effect::before,
+  .icon-bounce {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* Amélioration pour les petits écrans */
+@media (max-width: 640px) {
+  .stats-card {
+    animation-duration: 6s;
+  }
+  
+  .gradient-text {
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+/* Effet de glow subtil */
+.glow-effect {
+  box-shadow: 
+    0 0 20px rgba(59, 130, 246, 0.1),
+    0 0 40px rgba(59, 130, 246, 0.05);
+}
+
+.glow-effect:hover {
+  box-shadow: 
+    0 0 30px rgba(59, 130, 246, 0.15),
+    0 0 60px rgba(59, 130, 246, 0.1);
+}

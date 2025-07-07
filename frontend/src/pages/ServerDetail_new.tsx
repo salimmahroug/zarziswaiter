@@ -65,6 +65,7 @@ export default function ServerDetail() {
     queryFn: () => eventService.getServerEvents(id!),
     enabled: !!id,
   });
+
   if (isLoading || eventsLoading) {
     return (
       <div className="server-detail-container">
@@ -96,7 +97,9 @@ export default function ServerDetail() {
         </div>
       </div>
     );
-  } // Calculer les statistiques de paiement en utilisant nos fonctions utilitaires
+  }
+
+  // Calculer les statistiques de paiement en utilisant nos fonctions utilitaires
   // Utiliser les valeurs calculées par le backend si disponibles, sinon calculer à partir des paiements
   const totalPaid = server.totalPayments || calculateTotalPaid(server);
   const remainingAmount = server.totalEarnings || 0;
@@ -203,6 +206,7 @@ export default function ServerDetail() {
           </div>
         </div>
       </div>
+
       {/* Vue d'ensemble - Stats principales responsive */}
       <div className="stats-grid">
         <Card className="detail-card bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
@@ -277,6 +281,7 @@ export default function ServerDetail() {
           </CardContent>
         </Card>
       </div>
+
       {/* Layout principal responsive */}
       <div className="main-layout">
         {/* Informations personnelles - Améliorées et responsives */}
@@ -355,28 +360,28 @@ export default function ServerDetail() {
           </CardContent>
         </Card>
 
-        {/* Statistiques financières détaillées */}
-        <Card className="hover:shadow-lg transition-shadow duration-200">
+        {/* Statistiques financières détaillées - Responsive */}
+        <Card className="detail-card hover:shadow-lg transition-shadow duration-200">
           <CardHeader className="pb-3">
-            <CardTitle className="flex items-center gap-2 text-lg">
-              <div className="p-2 bg-green-100 rounded-lg">
+            <CardTitle className="flex items-center gap-2 responsive-subtitle">
+              <div className="p-2 bg-green-100 rounded-lg shrink-0">
                 <Wallet className="h-5 w-5 text-green-600" />
               </div>
-              Détails financiers
+              <span className="truncate">Détails financiers</span>
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="space-y-3">
-              <div className="p-4 bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg border border-blue-200">
+            <div className="financial-stats">
+              <div className="financial-card bg-gradient-to-r from-blue-50 to-blue-100 border-blue-200">
                 <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center gap-2">
-                    <Wallet className="h-4 w-4 text-blue-600" />
-                    <span className="text-sm font-medium text-blue-800">
+                  <div className="flex items-center gap-2 min-w-0 flex-1">
+                    <Wallet className="h-4 w-4 text-blue-600 shrink-0" />
+                    <span className="text-sm font-medium text-blue-800 truncate">
                       Gains bruts accumulés
                     </span>
                   </div>
                 </div>
-                <p className="text-2xl font-bold text-blue-700">
+                <p className="text-xl sm:text-2xl font-bold text-blue-700 truncate">
                   {formatCurrency(originalTotalEarnings)} DT
                 </p>
                 <p className="text-xs text-blue-600 mt-1">
@@ -384,16 +389,16 @@ export default function ServerDetail() {
                 </p>
               </div>
 
-              <div className="p-4 bg-gradient-to-r from-green-50 to-green-100 rounded-lg border border-green-200">
+              <div className="financial-card bg-gradient-to-r from-green-50 to-green-100 border-green-200">
                 <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center gap-2">
-                    <CreditCard className="h-4 w-4 text-green-600" />
-                    <span className="text-sm font-medium text-green-800">
+                  <div className="flex items-center gap-2 min-w-0 flex-1">
+                    <CreditCard className="h-4 w-4 text-green-600 shrink-0" />
+                    <span className="text-sm font-medium text-green-800 truncate">
                       Montant reçu
                     </span>
                   </div>
                 </div>
-                <p className="text-2xl font-bold text-green-700">
+                <p className="text-xl sm:text-2xl font-bold text-green-700 truncate">
                   {formatCurrency(totalPaid)} DT
                 </p>
                 <p className="text-xs text-green-600 mt-1">
@@ -401,62 +406,63 @@ export default function ServerDetail() {
                 </p>
               </div>
 
-              <div className="p-4 bg-gradient-to-r from-orange-50 to-orange-100 rounded-lg border border-orange-200">
+              <div className="financial-card bg-gradient-to-r from-orange-50 to-orange-100 border-orange-200">
                 <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center gap-2">
-                    <TrendingDown className="h-4 w-4 text-orange-600" />
-                    <span className="text-sm font-medium text-orange-800">
+                  <div className="flex items-center gap-2 min-w-0 flex-1">
+                    <TrendingDown className="h-4 w-4 text-orange-600 shrink-0" />
+                    <span className="text-sm font-medium text-orange-800 truncate">
                       Solde restant
                     </span>
                   </div>
                 </div>
-                <p className="text-2xl font-bold text-orange-700">
+                <p className="text-xl sm:text-2xl font-bold text-orange-700 truncate">
                   {formatCurrency(remainingAmount)} DT
                 </p>
-                <p className="text-xs text-orange-600 mt-1">
+                <p className="text-xs text-orange-600 mt-1 truncate">
                   TotalEarnings: {formatCurrency(server.totalEarnings || 0)} DT
                 </p>
               </div>
             </div>
-          </CardContent>{" "}
+          </CardContent>
         </Card>
 
-        {/* Résumé des paiements - Amélioré */}
-        <Card className="hover:shadow-lg transition-shadow duration-200">
+        {/* Résumé des paiements - Amélioré et responsive */}
+        <Card className="detail-card hover:shadow-lg transition-shadow duration-200">
           <CardHeader className="pb-3">
-            <CardTitle className="flex items-center gap-2 text-lg">
-              <div className="p-2 bg-purple-100 rounded-lg">
+            <CardTitle className="flex items-center gap-2 responsive-subtitle">
+              <div className="p-2 bg-purple-100 rounded-lg shrink-0">
                 <History className="h-5 w-5 text-purple-600" />
               </div>
-              Résumé des paiements
+              <span className="truncate">Résumé des paiements</span>
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid grid-cols-1 gap-3">
               <div className="flex items-center justify-between p-3 bg-gradient-to-r from-purple-50 to-purple-100 rounded-lg border border-purple-200">
-                <div className="flex items-center gap-2">
-                  <History className="h-4 w-4 text-purple-600" />
-                  <span className="text-sm font-medium text-purple-800">
+                <div className="flex items-center gap-2 min-w-0 flex-1">
+                  <History className="h-4 w-4 text-purple-600 shrink-0" />
+                  <span className="text-sm font-medium text-purple-800 truncate">
                     Paiements effectués
                   </span>
                 </div>
-                <span className="text-lg font-bold text-purple-700">
+                <span className="text-lg font-bold text-purple-700 shrink-0">
                   {server.payments?.length || 0}
                 </span>
               </div>
 
               <div className="flex items-center justify-between p-3 bg-gradient-to-r from-indigo-50 to-indigo-100 rounded-lg border border-indigo-200">
-                <div className="flex items-center gap-2">
-                  <Wallet className="h-4 w-4 text-indigo-600" />
-                  <span className="text-sm font-medium text-indigo-800">
+                <div className="flex items-center gap-2 min-w-0 flex-1">
+                  <Wallet className="h-4 w-4 text-indigo-600 shrink-0" />
+                  <span className="text-sm font-medium text-indigo-800 truncate">
                     TotalEarnings actuel
                   </span>
                 </div>
-                <span className="text-lg font-bold text-indigo-700">
+                <span className="text-lg font-bold text-indigo-700 shrink-0 truncate">
                   {formatCurrency(server.totalEarnings)} DT
                 </span>
               </div>
             </div>
+            
             {server.payments && server.payments.length > 0 && (
               <div className="space-y-3">
                 <div className="border-t pt-3">
@@ -464,14 +470,14 @@ export default function ServerDetail() {
                     Dernier paiement
                   </p>
                   <div className="p-3 bg-gradient-to-r from-green-50 to-green-100 rounded-lg border border-green-200">
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="font-medium text-green-700">
+                    <div className="flex items-center justify-between mb-1 gap-2">
+                      <span className="font-medium text-green-700 truncate">
                         {formatCurrency(
                           server.payments[server.payments.length - 1].amount
                         )}{" "}
                         DT
                       </span>
-                      <Badge variant="outline" className="text-xs bg-white">
+                      <Badge variant="outline" className="text-xs bg-white shrink-0">
                         {format(
                           new Date(
                             server.payments[server.payments.length - 1].date
@@ -481,7 +487,7 @@ export default function ServerDetail() {
                         )}
                       </Badge>
                     </div>
-                    <p className="text-xs text-green-600">
+                    <p className="text-xs text-green-600 truncate">
                       Méthode:{" "}
                       {
                         getPaymentMethodLabel(
@@ -493,7 +499,8 @@ export default function ServerDetail() {
                   </div>
                 </div>
               </div>
-            )}{" "}
+            )}
+            
             <Button
               variant="outline"
               className="w-full mt-4 hover:bg-purple-50"
@@ -505,22 +512,23 @@ export default function ServerDetail() {
           </CardContent>
         </Card>
       </div>
+
       {/* Section principale - Historique des paiements détaillé */}
-      <Card className="hover:shadow-lg transition-shadow duration-200">
+      <Card className="detail-card hover:shadow-lg transition-shadow duration-200">
         <CardHeader className="pb-4">
-          <CardTitle className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="p-2 bg-indigo-100 rounded-lg">
+          <CardTitle className="flex items-center justify-between flex-wrap gap-2">
+            <div className="flex items-center gap-2 min-w-0">
+              <div className="p-2 bg-indigo-100 rounded-lg shrink-0">
                 <History className="h-5 w-5 text-indigo-600" />
               </div>
-              <span className="text-xl">Historique des paiements détaillé</span>
-            </div>{" "}
+              <span className="responsive-subtitle truncate">Historique des paiements détaillé</span>
+            </div>
             {server.payments && server.payments.length > 3 && (
               <Button
                 variant="outline"
                 size="sm"
                 onClick={() => navigate("/server-payments")}
-                className="hover:bg-indigo-50"
+                className="hover:bg-indigo-50 shrink-0"
               >
                 Effectuer un paiement
               </Button>
@@ -529,7 +537,7 @@ export default function ServerDetail() {
         </CardHeader>
         <CardContent>
           {!server.payments || server.payments.length === 0 ? (
-            <div className="text-center py-12">
+            <div className="empty-state">
               <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <FileText className="h-8 w-8 text-gray-400" />
               </div>
@@ -549,7 +557,7 @@ export default function ServerDetail() {
               </Button>
             </div>
           ) : (
-            <div className="space-y-4">
+            <div className="payment-history">
               {server.payments
                 .sort(
                   (a, b) =>
@@ -563,31 +571,31 @@ export default function ServerDetail() {
                   return (
                     <div
                       key={index}
-                      className="group p-4 border border-gray-200 rounded-lg hover:border-blue-300 hover:shadow-md transition-all duration-200"
+                      className="payment-item"
                     >
-                      <div className="flex items-start justify-between">
-                        <div className="flex-1">
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-3 mb-3">
-                            <div className="p-2 bg-green-100 rounded-lg">
+                            <div className="p-2 bg-green-100 rounded-lg shrink-0">
                               <DollarSign className="h-4 w-4 text-green-600" />
                             </div>
-                            <div>
-                              <span className="text-xl font-bold text-green-600">
+                            <div className="flex items-center gap-2 flex-wrap">
+                              <span className="text-lg sm:text-xl font-bold text-green-600">
                                 {formatCurrency(payment.amount)} DT
                               </span>
                               <Badge
                                 variant="outline"
-                                className={`ml-2 text-xs ${methodInfo.color}`}
+                                className={`text-xs ${methodInfo.color}`}
                               >
                                 {methodInfo.label}
                               </Badge>
                             </div>
                           </div>
 
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-muted-foreground">
+                          <div className="payment-details text-sm text-muted-foreground">
                             <div className="flex items-center gap-2">
-                              <Clock className="h-3 w-3" />
-                              <span>
+                              <Clock className="h-3 w-3 shrink-0" />
+                              <span className="truncate">
                                 {format(
                                   new Date(payment.date),
                                   "dd/MM/yyyy 'à' HH:mm",
@@ -596,16 +604,16 @@ export default function ServerDetail() {
                               </span>
                             </div>
                             <div className="flex items-center gap-2">
-                              <TrendingDown className="h-3 w-3" />
-                              <span>
+                              <TrendingDown className="h-3 w-3 shrink-0" />
+                              <span className="truncate">
                                 Restant: {formatCurrency(payment.remaining)} DT
                               </span>
                             </div>
                           </div>
 
                           {/* Détails complets du paiement dans une section pliable */}
-                          <div className="mt-3 p-3 bg-gray-50 rounded-lg border text-xs">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                          <div className="mt-3 p-3 bg-gray-50 rounded-lg border text-xs scroll-container">
+                            <div className="payment-details">
                               <div>
                                 <span className="font-medium">
                                   ID de paiement:
@@ -662,26 +670,27 @@ export default function ServerDetail() {
                 </div>
               )}
             </div>
-          )}{" "}
+          )}
         </CardContent>
       </Card>
+
       {/* Section Historique des Événements */}
-      <Card className="hover:shadow-lg transition-shadow duration-200">
+      <Card className="detail-card hover:shadow-lg transition-shadow duration-200">
         <CardHeader className="pb-4">
-          <CardTitle className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="p-2 bg-purple-100 rounded-lg">
+          <CardTitle className="flex items-center justify-between flex-wrap gap-2">
+            <div className="flex items-center gap-2 min-w-0">
+              <div className="p-2 bg-purple-100 rounded-lg shrink-0">
                 <Calendar className="h-5 w-5 text-purple-600" />
               </div>
-              <span className="text-xl">Historique des événements</span>
-              <Badge variant="outline" className="bg-purple-50">
+              <span className="responsive-subtitle">Historique des événements</span>
+              <Badge variant="outline" className="bg-purple-50 shrink-0">
                 {serverEvents.length} événement
                 {serverEvents.length !== 1 ? "s" : ""}
               </Badge>
             </div>
             {serverEvents.length > 0 && (
               <div className="flex items-center gap-2">
-                <Badge variant="outline" className="text-green-600">
+                <Badge variant="outline" className="text-green-600 badge-responsive">
                   Total gagné:{" "}
                   {formatCurrency(
                     serverEvents.reduce(
@@ -704,7 +713,7 @@ export default function ServerDetail() {
               </p>
             </div>
           ) : serverEvents.length === 0 ? (
-            <div className="text-center py-12">
+            <div className="empty-state">
               <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Calendar className="h-8 w-8 text-gray-400" />
               </div>
@@ -726,15 +735,15 @@ export default function ServerDetail() {
           ) : (
             <div className="space-y-4">
               {/* Statistiques des événements */}
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+              <div className="events-stats-grid">
                 <div className="p-4 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg border border-blue-200">
                   <div className="flex items-center gap-3">
-                    <Calendar className="h-5 w-5 text-blue-600" />
-                    <div>
+                    <Calendar className="h-5 w-5 text-blue-600 shrink-0" />
+                    <div className="min-w-0">
                       <p className="text-sm text-blue-700 font-medium">
                         Total événements
                       </p>
-                      <p className="text-xl font-bold text-blue-800">
+                      <p className="text-lg sm:text-xl font-bold text-blue-800">
                         {serverEvents.length}
                       </p>
                     </div>
@@ -743,12 +752,12 @@ export default function ServerDetail() {
 
                 <div className="p-4 bg-gradient-to-br from-green-50 to-green-100 rounded-lg border border-green-200">
                   <div className="flex items-center gap-3">
-                    <DollarSign className="h-5 w-5 text-green-600" />
-                    <div>
+                    <DollarSign className="h-5 w-5 text-green-600 shrink-0" />
+                    <div className="min-w-0">
                       <p className="text-sm text-green-700 font-medium">
                         Revenus événements
                       </p>
-                      <p className="text-xl font-bold text-green-800">
+                      <p className="text-lg sm:text-xl font-bold text-green-800 truncate">
                         {formatCurrency(
                           serverEvents.reduce(
                             (sum, event) => sum + (event.serverPayAmount || 0),
@@ -763,12 +772,12 @@ export default function ServerDetail() {
 
                 <div className="p-4 bg-gradient-to-br from-amber-50 to-amber-100 rounded-lg border border-amber-200">
                   <div className="flex items-center gap-3">
-                    <TrendingDown className="h-5 w-5 text-amber-600" />
-                    <div>
+                    <TrendingDown className="h-5 w-5 text-amber-600 shrink-0" />
+                    <div className="min-w-0">
                       <p className="text-sm text-amber-700 font-medium">
                         Revenu moyen
                       </p>
-                      <p className="text-xl font-bold text-amber-800">
+                      <p className="text-lg sm:text-xl font-bold text-amber-800 truncate">
                         {formatCurrency(
                           serverEvents.length > 0
                             ? serverEvents.reduce(
@@ -786,12 +795,12 @@ export default function ServerDetail() {
 
                 <div className="p-4 bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg border border-purple-200">
                   <div className="flex items-center gap-3">
-                    <Heart className="h-5 w-5 text-purple-600" />
-                    <div>
+                    <Heart className="h-5 w-5 text-purple-600 shrink-0" />
+                    <div className="min-w-0">
                       <p className="text-sm text-purple-700 font-medium">
                         Type principal
-                      </p>{" "}
-                      <p className="text-lg font-bold text-purple-800">
+                      </p>
+                      <p className="text-lg font-bold text-purple-800 truncate">
                         {serverEvents.length > 0
                           ? (() => {
                               const typeCounts = serverEvents.reduce(
@@ -819,12 +828,12 @@ export default function ServerDetail() {
 
               {/* Liste des événements */}
               <div className="space-y-4">
-                <h4 className="text-lg font-semibold flex items-center gap-2">
+                <h4 className="responsive-subtitle flex items-center gap-2">
                   <Users className="h-5 w-5 text-indigo-600" />
                   Liste complète des événements
                 </h4>
 
-                <div className="grid gap-4">
+                <div className="events-list">
                   {serverEvents
                     .sort(
                       (a, b) =>
@@ -833,20 +842,20 @@ export default function ServerDetail() {
                     .map((event, index) => (
                       <div
                         key={event.id}
-                        className="group p-4 border border-gray-200 rounded-lg hover:border-purple-300 hover:shadow-md transition-all duration-200 bg-white"
+                        className="event-item"
                       >
-                        <div className="flex items-start justify-between mb-3">
-                          <div className="flex items-center gap-3">
-                            <div className="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full group-hover:bg-purple-100 transition-colors">
+                        <div className="event-header">
+                          <div className="flex items-center gap-3 min-w-0">
+                            <div className="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full group-hover:bg-purple-100 transition-colors shrink-0">
                               {getEventTypeIcon(event.eventType)}
                             </div>
-                            <div>
-                              <h5 className="font-semibold text-lg text-gray-900">
+                            <div className="min-w-0">
+                              <h5 className="font-semibold text-lg text-gray-900 truncate">
                                 {event.clientName}
                               </h5>
                               <div className="flex items-center gap-2 text-sm text-gray-600">
-                                <Calendar className="h-3 w-3" />
-                                <span>
+                                <Calendar className="h-3 w-3 shrink-0" />
+                                <span className="truncate">
                                   {format(
                                     new Date(event.date),
                                     "dd MMMM yyyy 'à' HH:mm",
@@ -856,8 +865,8 @@ export default function ServerDetail() {
                               </div>
                             </div>
                           </div>
-                          <div className="text-right">
-                            <div className="flex items-center gap-2 mb-1">
+                          <div className="text-right shrink-0">
+                            <div className="flex items-center gap-2 mb-1 justify-end">
                               <Badge variant="secondary" className="text-xs">
                                 {getEventTypeLabel(event.eventType)}
                               </Badge>
@@ -868,10 +877,10 @@ export default function ServerDetail() {
                           </div>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 text-sm">
+                        <div className="event-info">
                           <div className="flex items-center gap-2">
-                            <MapPin className="h-3 w-3 text-gray-400" />
-                            <span className="text-gray-600">
+                            <MapPin className="h-3 w-3 text-gray-400 shrink-0" />
+                            <span className="text-gray-600 truncate">
                               {event.location}
                             </span>
                           </div>
@@ -879,15 +888,15 @@ export default function ServerDetail() {
                           {event.caterer &&
                             event.caterer !== "prive-sans-traiteur" && (
                               <div className="flex items-center gap-2">
-                                <ChefHat className="h-3 w-3 text-gray-400" />
-                                <span className="text-gray-600">
+                                <ChefHat className="h-3 w-3 text-gray-400 shrink-0" />
+                                <span className="text-gray-600 truncate">
                                   {getCatererLabel(event.caterer)}
                                 </span>
                               </div>
                             )}
 
                           <div className="flex items-center gap-2">
-                            <Users className="h-3 w-3 text-gray-400" />
+                            <Users className="h-3 w-3 text-gray-400 shrink-0" />
                             <span className="text-gray-600">
                               {event.assignedServers?.length || 0} serveur
                               {event.assignedServers?.length !== 1 ? "s" : ""}
@@ -908,23 +917,24 @@ export default function ServerDetail() {
           )}
         </CardContent>
       </Card>
-      {/* Données techniques - Améliorées */}
-      <Card className="hover:shadow-lg transition-shadow duration-200">
+
+      {/* Données techniques - Améliorées et responsives */}
+      <Card className="detail-card hover:shadow-lg transition-shadow duration-200">
         <CardHeader className="pb-4">
-          <CardTitle className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="p-2 bg-gray-100 rounded-lg">
+          <CardTitle className="flex items-center justify-between flex-wrap gap-2">
+            <div className="flex items-center gap-2 min-w-0">
+              <div className="p-2 bg-gray-100 rounded-lg shrink-0">
                 <FileText className="h-5 w-5 text-gray-600" />
               </div>
-              <span className="text-xl">Données techniques du serveur</span>
+              <span className="responsive-subtitle truncate">Données techniques du serveur</span>
             </div>
-            <Badge variant="outline" className="bg-gray-50">
+            <Badge variant="outline" className="bg-gray-50 shrink-0">
               Détails complets
             </Badge>
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 text-xs font-mono overflow-auto max-h-80">
+          <div className="technical-data">
             <pre className="text-gray-700">
               {JSON.stringify(server, null, 2)}
             </pre>

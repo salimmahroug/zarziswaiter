@@ -8,10 +8,10 @@ interface ProtectedRouteProps {
   serverOnly?: boolean;
 }
 
-const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ 
-  children, 
-  adminOnly = false, 
-  serverOnly = false 
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
+  children,
+  adminOnly = false,
+  serverOnly = false,
 }) => {
   const { isAuthenticated, user } = useAuth();
 
@@ -20,12 +20,12 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   }
 
   // Si c'est une route admin seulement et l'utilisateur n'est pas admin
-  if (adminOnly && user?.role !== 'admin') {
+  if (adminOnly && user?.role !== "admin") {
     return <Navigate to="/server-dashboard" replace />;
   }
 
   // Si c'est une route serveur seulement et l'utilisateur n'est pas serveur
-  if (serverOnly && user?.role !== 'server') {
+  if (serverOnly && user?.role !== "server") {
     return <Navigate to="/dashboard" replace />;
   }
 

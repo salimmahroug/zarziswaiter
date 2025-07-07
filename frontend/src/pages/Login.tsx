@@ -26,7 +26,7 @@ import { Server } from "@/types";
 
 const Login = () => {
   const { login: authLogin, loginAsServer, isAuthenticated, user } = useAuth();
-  const [userType, setUserType] = useState<'admin' | 'server'>('admin');
+  const [userType, setUserType] = useState<"admin" | "server">("admin");
   const [credentials, setCredentials] = useState({
     username: "",
     password: "",
@@ -41,7 +41,7 @@ const Login = () => {
   // Rediriger si l'utilisateur est déjà connecté
   useEffect(() => {
     if (isAuthenticated && user) {
-      if (user.role === 'server') {
+      if (user.role === "server") {
         navigate("/server-dashboard", { replace: true });
       } else {
         navigate("/dashboard", { replace: true });
@@ -52,14 +52,16 @@ const Login = () => {
   // Charger la liste des serveurs au montage du composant
   useEffect(() => {
     const fetchServers = async () => {
-      if (userType === 'server') {
+      if (userType === "server") {
         setLoadingServers(true);
         try {
           const serversList = await getAllServers();
           setServers(serversList);
         } catch (error) {
-          console.error('Erreur lors du chargement des serveurs:', error);
-          setError("Impossible de charger la liste des serveurs. Veuillez réessayer.");
+          console.error("Erreur lors du chargement des serveurs:", error);
+          setError(
+            "Impossible de charger la liste des serveurs. Veuillez réessayer."
+          );
         } finally {
           setLoadingServers(false);
         }
@@ -74,10 +76,13 @@ const Login = () => {
     setError("");
     setIsLoading(true);
 
-    if (userType === 'admin') {
+    if (userType === "admin") {
       // Vérification des identifiants admin via le contexte
-      const loginSuccess = authLogin(credentials.username, credentials.password);
-      
+      const loginSuccess = authLogin(
+        credentials.username,
+        credentials.password
+      );
+
       if (loginSuccess) {
         navigate("/dashboard");
       } else {
@@ -86,8 +91,8 @@ const Login = () => {
     } else {
       // Connexion serveur via le contexte
       if (selectedServer) {
-        const server = servers.find(s => s.id === selectedServer);
-        
+        const server = servers.find((s) => s.id === selectedServer);
+
         if (server) {
           loginAsServer(server.id, server.name);
           navigate("/server-dashboard");
@@ -121,10 +126,9 @@ const Login = () => {
           </div>
           <CardTitle className="text-2xl text-center">Connexion</CardTitle>
           <CardDescription className="text-center">
-            {userType === 'admin' 
-              ? 'Accès administration' 
-              : 'Sélectionnez votre nom pour accéder à votre espace'
-            }
+            {userType === "admin"
+              ? "Accès administration"
+              : "Sélectionnez votre nom pour accéder à votre espace"}
           </CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit}>
@@ -141,9 +145,9 @@ const Login = () => {
               <div className="grid grid-cols-2 gap-3">
                 <Button
                   type="button"
-                  variant={userType === 'admin' ? 'default' : 'outline'}
+                  variant={userType === "admin" ? "default" : "outline"}
                   onClick={() => {
-                    setUserType('admin');
+                    setUserType("admin");
                     setSelectedServer("");
                     setError("");
                   }}
@@ -154,9 +158,9 @@ const Login = () => {
                 </Button>
                 <Button
                   type="button"
-                  variant={userType === 'server' ? 'default' : 'outline'}
+                  variant={userType === "server" ? "default" : "outline"}
                   onClick={() => {
-                    setUserType('server');
+                    setUserType("server");
                     setCredentials({ username: "", password: "" });
                     setSelectedServer("");
                     setError("");
@@ -170,7 +174,7 @@ const Login = () => {
             </div>
 
             {/* Formulaire Admin */}
-            {userType === 'admin' && (
+            {userType === "admin" && (
               <>
                 <div className="space-y-2">
                   <Label htmlFor="username">Nom d'utilisateur</Label>
@@ -209,22 +213,28 @@ const Login = () => {
             )}
 
             {/* Formulaire Serveur */}
-            {userType === 'server' && (
+            {userType === "server" && (
               <div className="space-y-2">
                 <Label htmlFor="serverSelect">Sélectionnez votre nom</Label>
                 {loadingServers ? (
                   <div className="flex items-center justify-center py-4">
                     <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                    <span className="text-sm text-gray-500">Chargement des serveurs...</span>
+                    <span className="text-sm text-gray-500">
+                      Chargement des serveurs...
+                    </span>
                   </div>
                 ) : servers.length === 0 ? (
                   <Alert>
                     <AlertDescription>
-                      Aucun serveur trouvé. Contactez l'administrateur pour ajouter des serveurs.
+                      Aucun serveur trouvé. Contactez l'administrateur pour
+                      ajouter des serveurs.
                     </AlertDescription>
                   </Alert>
                 ) : (
-                  <Select value={selectedServer} onValueChange={setSelectedServer}>
+                  <Select
+                    value={selectedServer}
+                    onValueChange={setSelectedServer}
+                  >
                     <SelectTrigger>
                       <SelectValue placeholder="Choisissez votre nom dans la liste" />
                     </SelectTrigger>
@@ -247,14 +257,23 @@ const Login = () => {
           </CardContent>
 
           <CardFooter>
-            <Button 
-              type="submit" 
-              className="w-full" 
-              disabled={isLoading || loadingServers || (userType === 'server' && (!selectedServer || servers.length === 0))}
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={
+                isLoading ||
+                loadingServers ||
+                (userType === "server" &&
+                  (!selectedServer || servers.length === 0))
+              }
             >
-              {isLoading ? "Connexion..." : 
-               loadingServers ? "Chargement..." :
-               userType === 'admin' ? 'Se connecter' : 'Accéder à mon espace'}
+              {isLoading
+                ? "Connexion..."
+                : loadingServers
+                ? "Chargement..."
+                : userType === "admin"
+                ? "Se connecter"
+                : "Accéder à mon espace"}
             </Button>
           </CardFooter>
         </form>

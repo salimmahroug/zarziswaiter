@@ -1,0 +1,26 @@
+services:
+  # Backend API
+  - type: web
+    name: waiter-zarzis-backend
+    env: node
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && node server.cjs
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+
+  # Frontend SPA
+  - type: web
+    name: waiter-zarzis-frontend
+    env: static
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: frontend/dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: NODE_ENV
+        value: production
