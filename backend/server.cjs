@@ -23,10 +23,21 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Connect to MongoDB
+console.log(
+  "MONGODB_URI:",
+  process.env.MONGODB_URI ? "Set (hidden for security)" : "NOT SET"
+);
+console.log("NODE_ENV:", process.env.NODE_ENV);
+
+if (!process.env.MONGODB_URI) {
+  console.error("❌ MONGODB_URI environment variable is not set!");
+  process.exit(1);
+}
+
 mongoose
   .connect(process.env.MONGODB_URI)
-  .then(() => console.log("MongoDB Connected"))
-  .catch((err) => console.error("MongoDB Connection Error:", err));
+  .then(() => console.log("✅ MongoDB Connected"))
+  .catch((err) => console.error("❌ MongoDB Connection Error:", err));
 
 // API Routes avec préfixe /api
 app.use("/api/servers", serverRoutes);
