@@ -1,0 +1,34 @@
+{
+  "name": "Waiter of Zarzis - Gestion d'événements",
+  "short_name": "Waiter Zarzis",
+  "description": "Plateforme de gestion pour serveurs professionnels à Zarzis",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#4a99cd",
+  "theme_color": "#4a99cd",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    }
+  ],
+  "categories": ["business", "productivity", "utilities"],
+  "lang": "fr",
+  "scope": "/",
+  "screenshots": [
+    {
+      "src": "/og-image.svg",
+      "sizes": "1200x630",
+      "type": "image/svg+xml",
+      "label": "Page d'accueil Waiter of Zarzis"
+    }
+  ]
+}
