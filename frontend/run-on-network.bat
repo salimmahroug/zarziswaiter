@@ -17,8 +17,8 @@ start cmd /k "npm run dev -- --host 192.168.100.145"
 
 echo.
 echo ✅ Servers started!
-echo    - Backend API: http://192.168.100.145:5001/api
-echo    - Frontend:    http://192.168.100.145:8080
+echo    - Backend API: https://zarziswaiter-2.onrender.com
+echo    - Frontend:    https://zarziswaiter-3.onrender.com
 echo.
 echo ⚠️  Make sure your phone is connected to the same WiFi network.
 echo    You may need to allow the application through your firewall.

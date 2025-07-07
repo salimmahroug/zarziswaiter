@@ -2,13 +2,22 @@
 import axios from 'axios';
 
 // Determine API URL based on environment
-// Use the explicit IP address to ensure connectivity from mobile devices
-// You can use either localhost or 192.168.100.145 (your WiFi IP) for development
-const IP_ADDRESS = '192.168.100.145'; // Your current WiFi IP address
-const API_URL = `http://${IP_ADDRESS}:5001/api`;
+const getApiUrl = () => {
+  // En production, utiliser l'URL de l'API déployée
+  if (import.meta.env.PROD) {
+    return import.meta.env.VITE_API_URL || 'https://zarziswaiter-2.onrender.com/api';
+  }
+  
+  // En développement, utiliser l'IP locale pour les tests mobiles
+  const IP_ADDRESS = '192.168.100.145'; // Votre IP WiFi actuelle
+  return `http://${IP_ADDRESS}:5001/api`;
+};
 
-// Add console logs to help debug the API connection
+const API_URL = getApiUrl();
+
+// Logs pour déboguer la connexion API
 console.log('API URL:', API_URL);
+console.log('Environment:', import.meta.env.MODE);
 
 const api = axios.create({
   baseURL: API_URL,
